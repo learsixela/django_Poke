@@ -21,6 +21,7 @@ class UserManager(models.Manager):
                 errores['password'] = "Password debe ser mayor a 6 caracteres"
             if postData['password'] != postData['password2']:
                 errores['password'] = "Password no son iguales"
+            #validacion del cumpleaños
         return errores
 
     def encriptar(self, password):

@@ -69,27 +69,23 @@ def registro(request):
         #encriptar password
         password = User.objects.encriptar(request.POST['password'])
         decode_hash_pw = password.decode('utf-8')
+        
+        rol = 2
+        if User.objects.all().count() == 0:
+            rol = 1
+
         #crear usuario
-        if request.POST['rol'] == '1':
-            user = User.objects.create(
-                nombre=request.POST['nombre'],
-                alias=request.POST['alias'],
-                email=request.POST['email'],
-                cumple=request.POST['cumple'],
-                password=decode_hash_pw,
-                rol=1,
-            )
-        else:
-            user = User.objects.create(
-                nombre=request.POST['nombre'],
-                alias=request.POST['alias'],
-                email=request.POST['email'],
-                cumple=request.POST['cumple'],
-                password=decode_hash_pw,
-                rol=2,
-            )
-        request.session['user_id'] = user.id
-    return redirect('home/')
+        user = User.objects.create(
+            nombre=request.POST['nombre'],
+            alias=request.POST['alias'],
+            email=request.POST['email'],
+            cumple=request.POST['cumple'],
+            password=decode_hash_pw,
+            rol=rol,
+        )
+        #request.session['user_id'] = user.id
+        #retornar mensaje de creacion correcta
+    return redirect('/')
 
 def logout(request):
     request.session.flush()

@@ -20,7 +20,13 @@
             <ul> 
             {% for user_poke in mis_pokes%}
                 
-                <li> {{user_poke.emisor.0.nombre}} te pincho un total de {{user_poke.total}} veces</li>
+                <li>{{user_poke}} {{user_poke.emisor}} {{user_poke.emisor.0}} {{user_poke.emisor.0.nombre}} te pincho un total de {{user_poke.total}} veces</li>
+            {% endfor %}
+            </ul>
+            
+            <ul>
+            {% for poke in los_poke %}
+                <li>{{poke.emisor}} </li>
             {% endfor %}
             </ul>
             <br>
