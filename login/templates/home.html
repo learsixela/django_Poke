@@ -18,8 +18,9 @@
         <br>
         <div class="content">
             <ul> 
-            {% for usuario in lista_usuarios%}
-                <li> {{usuario.nombre}} - {{usuario.alias}}</li>
+            {% for user_poke in mis_pokes%}
+                
+                <li> {{user_poke.emisor.0.nombre}} te pincho un total de {{user_poke.total}} veces</li>
             {% endfor %}
             </ul>
             <br>
@@ -35,18 +36,21 @@
                 </thead>
                 <tbody>
                 {% for usuario in lista_usuarios %}
-                <tr>
-                    <td>{{usuario.nombre}}</td>
-                    <td>{{usuario.alias}}</td>
-                    <td>{{usuario.email}}</td>
-                    <td>{{usuario.historico}}</td>
-                    <td>
-                        <form method="post">
-                            <input type="hidden" name="id" value="{{usuario.id}}">
-                            <input type="submit" name="poke" value="Poke!">
-                        </form>
-                    </td>
-                </tr>
+                    {% if usuario.id != active_user.id %}
+                        <tr>
+                            <td>{{usuario.nombre}}</td>
+                            <td>{{usuario.alias}}</td>
+                            <td>{{usuario.email}}</td>
+                            <td>{{usuario.historico}}</td>
+                            <td>
+                                <form action="addpoke" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="receptor_id" value="{{usuario.id}}">
+                                    <input type="submit" name="poke" value="Poke!">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endfor%}
             </tbody>
             </table>
